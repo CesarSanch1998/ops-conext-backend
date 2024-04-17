@@ -57,4 +57,4 @@ def add_data(data: Data_resync_request):
         return HTTPException(status_code=401, detail="Invalid API key")
     
     response = db_request_smartolt('get_onu_smartolt','HWTCEF11529F')
-    return HTTPException(status_code=202, detail=response)
+    return HTTPException(status_code=202, detail="yes")
