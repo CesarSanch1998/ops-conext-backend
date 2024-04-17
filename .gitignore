@@ -1,0 +1,43 @@
+# .gitignore
+
+# Python (Django)
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# IDEs/Editores
+.vscode/
+.idea/
+.env/
+.env
+.env.staging/
+.env.local/
+.env.production/
+
+# Logs
+*.log
+logs/
+
+# Environment
+env/
+
+# Django-specific
+local_settings.py
+
+# Virtualenv
+# Note: You may want to remove this if you are using a global virtualenv.
+/.venv/
+
+# SSH/GPG
+.ssh/
+.gnupg/
+
+# OS generated files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# System files
+thumbs.db
