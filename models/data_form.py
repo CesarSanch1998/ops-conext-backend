@@ -22,4 +22,4 @@ class Data_resync(BaseModel):
 
 class Data_resync_request(BaseModel):
     api_key:str
-    data:Data
+    data:Data_resync
