@@ -2,7 +2,7 @@ import os
 import json
 from dotenv import load_dotenv
 import requests
-from utils.definitions import domain,headers
+from utils.definitions import domain,headers,endpoints
 
 # domain = definitions.domain
 # headers = definitions.headers
@@ -30,9 +30,10 @@ def db_request(endpoint: str, data: dict):
 def db_request_smartolt(endpoint: str, unique_id_smartolt: str):
     headers['X-Token'] = os.environ["API_KEY_SMARTOLT"]
 
-    url = f"https://conext.smartolt.com/api{endpoint}/{unique_id_smartolt}"
+    url = f"https://conext.smartolt.com/api{endpoints[endpoint]}/{unique_id_smartolt}"
+    
     try:
-        response = requests.post(url, data=None, headers=headers, verify=False)
+        response = requests.post(url, data=None, headers=headers)
         if response.status_code != requests.codes.ok:
             return {
                 "error": True,
