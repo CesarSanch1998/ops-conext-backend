@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from models.data_form import Data_request,Data_resync_request
 from scripts.IC import search_autofind
 from fastapi.middleware.cors import CORSMiddleware
+from scripts.RS import resync_getdata_smartolt
 from fastapi import HTTPException
-from utils.request import db_request_smartolt
 import os
 from dotenv import load_dotenv
 
@@ -34,7 +34,7 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"ms_running"}
 
 
 @app.post("/add-client")
@@ -53,8 +53,8 @@ def add_data(data: Data_request):
 @app.post("/resync-ont")
 def add_data(data: Data_resync_request):
     # Api key smartolt ----------------------
-    if data.api_key != os.environ["API_KEY_SMARTOLT"]:
+    if data.api_key != os.environ["API_KEY"]:
         return HTTPException(status_code=401, detail="Invalid API key")
     
-    response = db_request_smartolt('get_onu_smartolt','HWTCEF11529F')
+    response = resync_getdata_smartolt(data.data.unique_id_smartolt)
     return HTTPException(status_code=202, detail=response)
