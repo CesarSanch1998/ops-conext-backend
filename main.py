@@ -61,4 +61,4 @@ def add_data(data: Data_resync_request):
     return HTTPException(status_code=202, detail=response)
 
 if __name__ == '__main__':
-    run(app, host='0.0.0.0', port=443, ssl=True, ssl_keyfile='/etc/ssl/resync-smartolt.conext.net.ve.key', ssl_certfile='/etc/ssl/resync-smartolt.conext.net.ve.crt')
+    run(app, host='0.0.0.0', port=8000, ssl=True, ssl_keyfile='/etc/ssl/resync-smartolt.conext.net.ve.key', ssl_certfile='/etc/ssl/resync-smartolt.conext.net.ve.crt')
