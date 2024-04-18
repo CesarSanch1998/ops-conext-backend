@@ -5,11 +5,14 @@ from scripts.IC import search_autofind
 from fastapi.middleware.cors import CORSMiddleware
 from scripts.RS import resync_getdata_smartolt
 from fastapi import HTTPException
+import ssl
 import os
 from dotenv import load_dotenv
 
 app = FastAPI()
 load_dotenv()
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+context.load_cert_chain('/home/conext/cert.pem', keyfile='/home/conext/keyfile.pem')
 
 origins = [
     "http://localhost",
