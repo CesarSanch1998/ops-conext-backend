@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from uvicorn import run
 from models.data_form import Data_request,Data_resync_request
 from scripts.IC import search_autofind
 from fastapi.middleware.cors import CORSMiddleware
@@ -58,3 +59,6 @@ def add_data(data: Data_resync_request):
     
     response = resync_getdata_smartolt(data.data.unique_id_smartolt)
     return HTTPException(status_code=202, detail=response)
+
+if __name__ == '__main__':
+    run(app, host='0.0.0.0', port=443, ssl=True, ssl_keyfile='/etc/ssl/resync-smartolt.conext.net.ve.key', ssl_certfile='/etc/ssl/resync-smartolt.conext.net.ve.crt')
