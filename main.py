@@ -13,8 +13,8 @@ from dotenv import load_dotenv
 app = FastAPI()
 app.add_middleware(HTTPSRedirectMiddleware)
 load_dotenv()
-context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-context.load_cert_chain('/home/conext/cert.pem', keyfile='/home/conext/key.pem')
+# context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+# context.load_cert_chain('/home/conext/cert.pem', keyfile='/home/conext/key.pem')
 
 origins = [
     "http://localhost",
@@ -66,6 +66,6 @@ def add_data(data: Data_resync_request):
     response = resync_getdata_smartolt(data.data.unique_id_smartolt)
     return HTTPException(status_code=202, detail=response)
 
-if __name__ == '__main__':
-    run("main:app", port=443, host='0.0.0.0', reload = True, reload_dirs = ["html_files"], ssl=context)
+# if __name__ == '__main__':
+#     run("main:app", port=443, host='0.0.0.0', reload = True, reload_dirs = ["html_files"], ssl=context)
     # run(app, host='0.0.0.0', port=8000, ssl=context)
