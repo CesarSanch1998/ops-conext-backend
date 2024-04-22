@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
+# from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 from uvicorn import run
 from models.data_form import Data_request,Data_resync_request
 from scripts.IC import search_autofind
@@ -11,7 +11,7 @@ import os
 from dotenv import load_dotenv
 
 app = FastAPI()
-app.add_middleware(HTTPSRedirectMiddleware)
+# app.add_middleware(HTTPSRedirectMiddleware)
 load_dotenv()
 # context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
 # context.load_cert_chain('/home/conext/cert.pem', keyfile='/home/conext/key.pem')
