@@ -60,6 +60,7 @@ def add_data(data: Data_request):
 @app.post("/resync-ont")
 def add_data(data: Data_resync_request):
     # Api key smartolt ----------------------
+    print(data)
     if data.api_key != os.environ["API_KEY"]:
         return HTTPException(status_code=401, detail="Invalid API key")
     print(data)
