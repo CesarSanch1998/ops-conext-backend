@@ -62,7 +62,7 @@ def add_data(data: Data_resync_request):
     # Api key smartolt ----------------------
     if data.api_key != os.environ["API_KEY"]:
         return HTTPException(status_code=401, detail="Invalid API key")
-    
+    print(data.data)
     response = resync_getdata_smartolt(data.data.unique_id_smartolt)
     return HTTPException(status_code=202, detail=response)
 
