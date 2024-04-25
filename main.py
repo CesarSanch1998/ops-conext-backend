@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 # from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 from uvicorn import run
 from models.data_form import Data_request,Data_resync_request
@@ -59,14 +59,15 @@ def add_data(data: Data_request):
     # return HTTPException(status_code=404, detail="Client not found in OLT or not instaled")
 
 @app.post("/resync-ont")
-def add_data(data: Data_resync_request):
+async def add_data(request: Request):
     # Api key smartolt ----------------------
+    data = await request.json()
+    print(data)
+    # if data.api_key != os.environ["API_KEY"]:
+    #     return HTTPException(status_code=401, detail="Invalid API key")
     
-    if data.api_key != os.environ["API_KEY"]:
-        return HTTPException(status_code=401, detail="Invalid API key")
-    
-    response = resync_getdata_smartolt(data.data.unique_id_smartolt)
-    return HTTPException(status_code=202, detail=response)
+    # response = resync_getdata_smartolt(data.data.unique_id_smartolt)
+    # return HTTPException(status_code=202, detail=response)
 
 # if __name__ == '__main__':
 #     run("main:app", port=443, host='0.0.0.0', reload = True, reload_dirs = ["html_files"], ssl=context)
