@@ -3,7 +3,6 @@ from fastapi import FastAPI
 from uvicorn import run
 from models.data_form import Data_request,Data_resync_request
 from scripts.IC import search_autofind
-from fastapi.middleware.cors import CORSMiddleware
 from scripts.RS import resync_getdata_smartolt
 from fastapi import HTTPException
 import ssl
@@ -16,28 +15,28 @@ load_dotenv()
 # context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
 # context.load_cert_chain('/home/conext/cert.pem', keyfile='/home/conext/key.pem')
 
-origins = [
-    "http://localhost",
-    "http://localhost:49229",
-    "http://127.0.0.1",
-    "http://127.0.0.1:49229",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:8000",
-    "http://localhost:8000",
-    "10.7.110.233:8000",
-    "10.7.110.233:3000",
-    "10.7.110.233",
-    "https://conext.smartolt.com/"
-]
+# origins = [
+#     "http://localhost",
+#     "http://localhost:49229",
+#     "http://127.0.0.1",
+#     "http://127.0.0.1:49229",
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+#     "http://127.0.0.1:8000",
+#     "http://localhost:8000",
+#     "10.7.110.233:8000",
+#     "10.7.110.233:3000",
+#     "10.7.110.233",
+#     "https://conext.smartolt.com/"
+# ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 
 @app.get("/")
