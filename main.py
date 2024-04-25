@@ -57,19 +57,20 @@ def add_data(data: Data_request):
     # {"response":"Cliente no se encuentra en la OLT","status":"OK"}
     # return HTTPException(status_code=404, detail="Client not found in OLT or not instaled")
 
-# @app.post("/resync-ont")
-# def add_data(data: Data_resync_request):
-#     # Api key smartolt ----------------------
-#     print(data)
-#     if data.api_key != os.environ["API_KEY"]:
-#         return HTTPException(status_code=401, detail="Invalid API key")
+@app.post("/resync-ont2")
+def add_data(data: Data_resync_request):
+    # Api key smartolt ----------------------
+    print(data)
+    if data.api_key != os.environ["API_KEY"]:
+        return HTTPException(status_code=401, detail="Invalid API key")
     
-#     response = resync_getdata_smartolt(data.data.unique_id_smartolt)
-#     return HTTPException(status_code=202, detail=response)
+    response = resync_getdata_smartolt(data.data.unique_id_smartolt)
+    return HTTPException(status_code=202, detail=response)
 
 @app.post("/resync-ont")
 async def resync_ont(request_data: RequestData):
     api_key = request_data.api_key
     unique_id_smartolt = request_data.data.get("unique_id_smartolt")
+    print(request_data)
     # Do something with the data here
     return {"message": "Received data successfully"}
