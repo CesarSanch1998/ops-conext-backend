@@ -27,7 +27,8 @@ origins = [
     "http://localhost:8000",
     "10.7.110.233:8000",
     "10.7.110.233:3000",
-    "10.7.110.233"
+    "10.7.110.233",
+    "https://conext.smartolt.com"
 ]
 
 app.add_middleware(
@@ -60,10 +61,10 @@ def add_data(data: Data_request):
 @app.post("/resync-ont")
 def add_data(data: Data_resync_request):
     # Api key smartolt ----------------------
-    print(data)
+    
     if data.api_key != os.environ["API_KEY"]:
         return HTTPException(status_code=401, detail="Invalid API key")
-    print(data)
+    
     response = resync_getdata_smartolt(data.data.unique_id_smartolt)
     return HTTPException(status_code=202, detail=response)
 
