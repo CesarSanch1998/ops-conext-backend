@@ -68,10 +68,8 @@ def add_data(data: Data_request):
 #     return HTTPException(status_code=202, detail=response)
 
 @app.post("/resync-ont")
-async def add_data(request_data: RequestData):
-    # Api key smartolt ----------------------
+async def resync_ont(request_data: RequestData):
     api_key = request_data.api_key
     unique_id_smartolt = request_data.data.get("unique_id_smartolt")
     # Do something with the data here
     return {"message": "Received data successfully"}
-
