@@ -29,7 +29,7 @@ def resync_getdata_smartolt(onu_unique_id):
         response = resync_undo_data_bridge(onu_data)
     elif onu_data['onu_mode'] == "Routing":
         response = resync_undo_data_router(onu_data)
-    return data
+    return response
 
 def resync_undo_data_bridge(data):
     (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
