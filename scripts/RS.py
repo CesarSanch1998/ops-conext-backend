@@ -48,7 +48,7 @@ def resync_undo_data_bridge(data):
     command(f"ont policy-route-config {data['onu_port']} {data['onu_id']} profile-id 2")
     command(f"quit")
     command(f"service-port {data['service_port']} vlan {data['vlan']} gpon {data['f/s/p']} ont {data['onu_id']} gemport 11 multi-service user-vlan {data['vlan']} tag-transform transparent inbound traffic-table index 111 outbound traffic-table index 111")
-
+    return f"Client Resync {data['onu_name']} Successfully"
 def resync_undo_data_router(data):
     (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
     # Undo ONT bridge
