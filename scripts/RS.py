@@ -24,11 +24,32 @@ def resync_getdata_smartolt(onu_unique_id):
     onu_data['f/s/p'] = f"{onu_data['onu_frame']}/{onu_data['onu_slot']}/{onu_data['onu_port']}"
     onu_data['onu_name'] = onu_details['name']
     onu_data['olt_name'] = onu_details['olt_name'][-1:]
-    print(onu_data['f/s/p'])
-    # response = resync_undo_data(onu_data)
+    # print(onu_data['f/s/p'])
+    if onu_data['onu_mode'] == "Bridging":
+        response = resync_undo_data_bridge(onu_data)
+    elif onu_data['onu_mode'] == "Routing":
+        response = resync_undo_data_router(onu_data)
     return data
 
-def resync_undo_data(data):
+def resync_undo_data_bridge(data):
+    (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
+    # Undo ONT bridge
+    command(f"undo service-port {data['service_port']} vlan {data['vlan']} gpon {data['f/s/p']} ont {data['onu_id']} gemport 11 multi-service user-vlan {data['vlan']} tag-transform transparent inbound traffic-table index 111 outbound traffic-table index 111")
+    command(f"interface gpon {data['onu_frame']}/{data['onu_slot']}")
+    command(f"undo ont internet-config {data['onu_port']} {data['onu_id']}")
+    command(f"undo ont wan-config {data['onu_port']} {data['onu_id']} ip-index 2")
+    command(f"undo ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 2")
+    command(f"undo ont policy-route-config {data['onu_port']} {data['onu_id']} profile-id 2")
+
+    # Reactivate ONT bridge
+    command(f"ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 2")
+    command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 2 profile-id 0")
+    command(f"ont internet-config {data['onu_port']} {data['onu_id']} ip-index 2")
+    command(f"ont policy-route-config {data['onu_port']} {data['onu_id']} profile-id 2")
+    command(f"quit")
+    command(f"service-port {data['service_port']} vlan {data['vlan']} gpon {data['f/s/p']} ont {data['onu_id']} gemport 11 multi-service user-vlan {data['vlan']} tag-transform transparent inbound traffic-table index 111 outbound traffic-table index 111")
+
+def resync_undo_data_router(data):
     (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
     # Undo ONT bridge
     command(f"undo service-port {data['service_port']} vlan {data['vlan']} gpon {data['f/s/p']} ont {data['onu_id']} gemport 11 multi-service user-vlan {data['vlan']} tag-transform transparent inbound traffic-table index 111 outbound traffic-table index 111")
