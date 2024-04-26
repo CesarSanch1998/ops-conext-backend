@@ -28,7 +28,7 @@ origins = [
     "10.7.110.233:8000",
     "10.7.110.233:3000",
     "10.7.110.233",
-    "https://conext.smartolt.com/"
+    "https://conext.smartolt.com"
 ]
 
 app.add_middleware(
