@@ -72,7 +72,7 @@ def resync_undo_data_router(data):
     command(f"undo ont port route {data['onu_port']} {data['onu_id']} eth 4 enable")
 
     # Reactivate ONT Router
-    command(f"ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 2")
+    command(f"ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 2 dhcp vlan {data['vlan']} priority 5")
     command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 2 profile-id 0")
     command(f"ont internet-config {data['onu_port']} {data['onu_id']} ip-index 2")
     command(f"ont policy-route-config {data['onu_port']} {data['onu_id']} profile-id 2")
