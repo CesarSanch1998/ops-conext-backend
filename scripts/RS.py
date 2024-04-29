@@ -1,5 +1,6 @@
 # Resync script for smartolt by chrome extension  
 from utils.request import db_request_smartolt
+from utils.snmp_funtion import SNMP_Master
 from utils.definitions import olt_devices,snmp_oid,PORT
 from utils.ssh import ssh
 
@@ -24,11 +25,16 @@ def resync_getdata_smartolt(onu_unique_id):
     onu_data['f/s/p'] = f"{onu_data['onu_frame']}/{onu_data['onu_slot']}/{onu_data['onu_port']}"
     onu_data['onu_name'] = onu_details['name']
     onu_data['olt_name'] = onu_details['olt_name'][-1:]
+    onu_data['onu_type_name'] = onu_details['onu_type_name']
     # print(onu_data['f/s/p'])
     if onu_data['onu_mode'] == "Bridging":
         response = resync_undo_data_bridge(onu_data)
     elif onu_data['onu_mode'] == "Routing":
-        response = resync_undo_data_router(onu_data)
+        if onu_data['onu_type_name'] == 'ONU-type-eth-4-pots-2-catv-0':
+            return 'BDCM'
+        else:
+            return onu_data['onu_type_name']
+        # response = resync_undo_data_router(onu_data)
     return response
 
 def resync_undo_data_bridge(data):
@@ -49,6 +55,7 @@ def resync_undo_data_bridge(data):
     command(f"quit")
     command(f"service-port {data['service_port']} vlan {data['vlan']} gpon {data['f/s/p']} ont {data['onu_id']} gemport 11 multi-service user-vlan {data['vlan']} tag-transform transparent inbound traffic-table index 111 outbound traffic-table index 111")
     return f"Client Resync {data['onu_name']} Successfully"
+
 def resync_undo_data_router(data):
     (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
     # Undo ONT bridge
@@ -66,3 +73,4 @@ def resync_undo_data_router(data):
     command(f"ont policy-route-config {data['onu_port']} {data['onu_id']} profile-id 2")
     command(f"quit")
     command(f"service-port {data['service_port']} vlan {data['vlan']} gpon {data['f/s/p']} ont {data['onu_id']} gemport 11 multi-service user-vlan {data['vlan']} tag-transform transparent inbound traffic-table index 111 outbound traffic-table index 111")
+    return f"Client Resync {data['onu_name']} Successfully"

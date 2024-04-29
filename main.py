@@ -11,10 +11,8 @@ import os
 from dotenv import load_dotenv
 
 app = FastAPI()
-# app.add_middleware(HTTPSRedirectMiddleware)
 load_dotenv()
-# context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-# context.load_cert_chain('/home/conext/cert.pem', keyfile='/home/conext/key.pem')
+
 
 origins = [
     "http://localhost",
