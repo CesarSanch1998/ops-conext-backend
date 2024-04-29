@@ -33,7 +33,8 @@ def resync_getdata_smartolt(onu_unique_id):
         if onu_data['onu_type_name'] == 'ONU-type-eth-4-pots-2-catv-0':
             return 'BDCM'
         else:
-            return onu_data['onu_type_name']
+            response = resync_undo_data_router(onu_data)
+            return response
         # response = resync_undo_data_router(onu_data)
     return response
 
@@ -58,15 +59,19 @@ def resync_undo_data_bridge(data):
 
 def resync_undo_data_router(data):
     (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
-    # Undo ONT bridge
+    # Undo ONT Router
     command(f"undo service-port {data['service_port']} vlan {data['vlan']} gpon {data['f/s/p']} ont {data['onu_id']} gemport 11 multi-service user-vlan {data['vlan']} tag-transform transparent inbound traffic-table index 111 outbound traffic-table index 111")
     command(f"interface gpon {data['onu_frame']}/{data['onu_slot']}")
     command(f"undo ont internet-config {data['onu_port']} {data['onu_id']}")
     command(f"undo ont wan-config {data['onu_port']} {data['onu_id']} ip-index 2")
     command(f"undo ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 2")
     command(f"undo ont policy-route-config {data['onu_port']} {data['onu_id']} profile-id 2")
+    command(f"undo ont port route {data['onu_port']} {data['onu_id']} eth 1 enable")
+    command(f"undo ont port route {data['onu_port']} {data['onu_id']} eth 2 enable")
+    command(f"undo ont port route {data['onu_port']} {data['onu_id']} eth 3 enable")
+    command(f"undo ont port route {data['onu_port']} {data['onu_id']} eth 4 enable")
 
-    # Reactivate ONT bridge
+    # Reactivate ONT Router
     command(f"ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 2")
     command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 2 profile-id 0")
     command(f"ont internet-config {data['onu_port']} {data['onu_id']} ip-index 2")
