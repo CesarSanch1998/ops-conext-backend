@@ -49,7 +49,7 @@ def resync_undo_data_bridge(data):
     command(f"undo ont policy-route-config {data['onu_port']} {data['onu_id']} profile-id 2")
 
     # Reactivate ONT bridge
-    command(f"ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 2")
+    command(f"ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 2 dhcp vlan {data['vlan']} priority 5")
     command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 2 profile-id 0")
     command(f"ont internet-config {data['onu_port']} {data['onu_id']} ip-index 2")
     command(f"ont policy-route-config {data['onu_port']} {data['onu_id']} profile-id 2")
