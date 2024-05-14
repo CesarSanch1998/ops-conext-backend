@@ -1,18 +1,15 @@
 from fastapi import FastAPI
-from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 from fastapi.middleware.cors import CORSMiddleware
-from uvicorn import run
-from models.data_form import Data_request,Data_resync_request,RequestData
-from scripts.IC import search_autofind
-from scripts.RS import resync_getdata_smartolt
 from fastapi import HTTPException
-import ssl
-import os
-from dotenv import load_dotenv
+#////Importando rutas ///////////////////
+from routes.resync import resync
+from routes.client import client
 
 app = FastAPI()
-load_dotenv()
 
+#/////Agregando la ruta al route
+app.include_router(resync)
+app.include_router(client)
 
 origins = [
     "http://localhost",
@@ -40,30 +37,12 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"ms_running"}
+    return HTTPException(status_code=202, detail="ms_running")
 
-
-@app.post("/add-client")
-def add_data(data: Data_request):
-    # Api key MS operativos ---------------------- 
-    if data.api_key != os.environ["API_KEY"]:
-        return HTTPException(status_code=401, detail="Invalid API key")
-    
-    complete_contract = data.data.contract.zfill(10)
-    response = search_autofind(data.data.name,complete_contract,data.data.olt,data.data.sn,data.data.device_type,data.data.assigned_public_ip,data.data.plan_name,data.data.isbridge)
-    return HTTPException(status_code=202, detail=response)
         # return HTTPException(status_code=401, detail="Invalid API key")
     # {"response":"Cliente no se encuentra en la OLT","status":"OK"}
     # return HTTPException(status_code=404, detail="Client not found in OLT or not instaled")
 
-@app.post("/resync-ont")
-def add_data(data: Data_resync_request):
-    # Api key smartolt ----------------------
-    if data.api_key != os.environ["API_KEY"]:
-        return HTTPException(status_code=401, detail="Invalid API key")
-    
-    response = resync_getdata_smartolt(data.data.unique_id_smartolt)
-    return HTTPException(status_code=202, detail=response)
 
 # @app.post("/resync-ont")
 # async def resync_ont(request_data: RequestData):
