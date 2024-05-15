@@ -28,24 +28,24 @@ def wanconfig_getdata_smartolt(onu_unique_id):
     onu_data['onu_type_name'] = onu_details['onu_type_name']
     # print(onu_data['f/s/p'])
     if onu_data['onu_mode'] == "Bridging":
-        response = resync_undo_data_bridge(onu_data)
+        response = wc_data_bridge(onu_data)
     elif onu_data['onu_mode'] == "Routing":
         if onu_data['onu_type_name'] == 'ONU-type-eth-4-pots-2-catv-0':
             return 'BDCM'
         else:
-            response = resync_undo_data_router(onu_data)
+            response = wc_data_router(onu_data)
             return response
         # response = resync_undo_data_router(onu_data)
     return response
 
-def resync_undo_data_bridge(data):
+def wc_data_bridge(data):
     (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
     # Wan Config bridge
     command(f"interface gpon {data['onu_frame']}/{data['onu_slot']}")
     command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 1 profile-id 0")
     return f"Client Resync {data['onu_name']} Successfully"
 
-def resync_undo_data_router(data):
+def wc_data_router(data):
     (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
     # Wan Config ONT Router
     command(f"interface gpon {data['onu_frame']}/{data['onu_slot']}")
