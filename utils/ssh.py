@@ -64,7 +64,7 @@ def ssh(ip, debugging):
     if ip in ["181.232.180.5", "181.232.180.6", "181.232.180.7"]:
         command("enable")
         command("config")
-        command("scroll 512")
+        # command("scroll 512")
     else:
         # command("\n")
         # command("N")
