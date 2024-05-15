@@ -41,7 +41,7 @@ def wanconfig_getdata_smartolt(onu_unique_id):
 def wc_data_bridge(data):
     (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
     #Undo config
-    command(f"undo ont ipconfig {data['onu_port']} {data['onu_id']} dhcp vlan {data['vlan']} priority 0")
+    command(f"undo ont ipconfig {data['onu_port']} {data['onu_id']}")
     # Wan Config bridge
     command(f"ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 1 dhcp vlan {data['vlan']} priority 0")
     command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 1 profile-id 0")
@@ -51,7 +51,7 @@ def wc_data_bridge(data):
 def wc_data_router(data):
     (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
     #Undo config
-    command(f"undo ont ipconfig {data['onu_port']} {data['onu_id']} dhcp vlan {data['vlan']} priority 0")
+    command(f"undo ont ipconfig {data['onu_port']} {data['onu_id']}")
     # Wan Config ONT Router
     command(f"interface gpon {data['onu_frame']}/{data['onu_slot']}")
     command(f"ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 1 dhcp vlan {data['vlan']} priority 0")
