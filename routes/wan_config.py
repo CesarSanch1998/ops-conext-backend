@@ -8,13 +8,13 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-resync = APIRouter()
+wanconfig = APIRouter()
 
-@resync.get("/wan-config-status")
+@wanconfig.get("/wan-config-status")
 def status():
     return HTTPException(status_code=202, detail="WC_Running")
 
-@resync.post("/wan-config-ont")
+@wanconfig.post("/wan-config-ont")
 def wan_config(data: Data_resync_request):
     # Api key smartolt ----------------------
     if data.api_key != os.environ["API_KEY"]:

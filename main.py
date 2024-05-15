@@ -4,14 +4,14 @@ from fastapi import HTTPException
 #////Importando rutas ///////////////////
 from routes.resync import resync
 from routes.client import client
-from routes.wan_config import wan_config
+from routes.wan_config import wanconfig
 
 app = FastAPI()
 
 #/////Agregando la ruta al route
 app.include_router(resync)
 app.include_router(client)
-app.include_router(wan_config)
+app.include_router(wanconfig)
 
 
 origins = [
