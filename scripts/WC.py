@@ -42,12 +42,12 @@ def wc_data_bridge(data):
     (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
     # Wan Config bridge
     command(f"interface gpon {data['onu_frame']}/{data['onu_slot']}")
-    command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 1 profile-id 0")
+    command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 1 profile-id 0")
     return f"Client Wan Config Asigned {data['onu_name']} Successfully"
 
 def wc_data_router(data):
     (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
     # Wan Config ONT Router
     command(f"interface gpon {data['onu_frame']}/{data['onu_slot']}")
-    command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 1 profile-id 0")
+    command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 1 profile-id 0")
     return f"Client Wan Config Asigned {data['onu_name']} Successfully"
