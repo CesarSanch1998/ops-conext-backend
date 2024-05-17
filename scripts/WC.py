@@ -41,14 +41,11 @@ def wanconfig_getdata_smartolt(onu_unique_id):
 def wc_data_bridge(data):
     (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
     command(f"interface gpon {data['onu_frame']}/{data['onu_slot']}")
-    #Undo config
-    command(f"undo ont ipconfig {data['onu_port']} {data['onu_id']}")
     # Wan Config bridge
     
     command(f"ont optical-alarm-profile {data['onu_port']} {data['onu_id']} profile-id 3")
     command(f"ont alarm-policy {data['onu_port']} {data['onu_id']} policy-id 1")
-    command(f"ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 1 dhcp vlan {data['vlan']} priority 0")
-    command(f"ont internet-config {data['onu_port']} {data['onu_id']} ip-index 1")
+
     return f"Client Wan Config Asigned {data['onu_name']} Successfully"
 
 def wc_data_router(data):
