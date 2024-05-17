@@ -30,12 +30,13 @@ def getdata_smartolt(onu_unique_id):
     onu_data['client_name'] = onu_details['name'][:-10]
     print(onu_data['client_name'])
     
-    if len(onu_data['client_name'].split()) <= 2:
+    if len(onu_data['client_name'].split(' ')) <= 2:
         onu_data['client_name_1'] = onu_data['client_name'].split(' ')[0]
         onu_data['client_name_2'] = onu_data['client_name'].split(' ')[1]
     else:
         onu_data['client_name_1'] = onu_data['client_name'].split(' ')[0]
         onu_data['client_name_2'] = onu_data['client_name'].split(' ', 1)[1]
+
 
     onu_data['olt_name'] = onu_details['olt_name'][-1:]
     onu_data['onu_type_name'] = onu_details['onu_type_name']
