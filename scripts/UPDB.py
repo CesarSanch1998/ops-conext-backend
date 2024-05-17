@@ -61,7 +61,7 @@ def update_client_db(data):
         request.onu_id = data['onu_id']
         request.olt = data['olt_name']
         request.fsp = data['f/s/p']
-        request.fspi = data['f/s/p'] + data['onu_id']
+        request.fspi = data['f/s/p'] +'/'+ data['onu_id']
         request.name_1 = data['client_name_1']
         request.name_2 = data['client_name_2']
         request.state = data['onu_state']
@@ -86,7 +86,7 @@ def add_client_db(data):
                        onu_id=data['onu_id'],
                        olt=data['olt_name'],
                        fsp=data['f/s/p'],
-                       fspi=data['f/s/p'] + data['onu_id'],
+                       fspi=data['f/s/p'] +'/'+ data['onu_id'],
                        name_1=data['client_name_1'],
                        name_2=data['client_name_2'],
                        state=data['onu_state'],
