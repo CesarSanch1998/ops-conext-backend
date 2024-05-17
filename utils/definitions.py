@@ -44,61 +44,19 @@ rtr_devices = {
 }
 rtrs = ["A1", "A2", "E1", "E2"]
 olts = ["1", "2", "3"]
-client_place_holder = {
-    "fail": None,
-    "name_1": None,
-    "name_2": None,
-    "contract": None,
-    "olt": None,
-    "frame": None,
-    "slot": None,
-    "port": None,
-    "onu_id": None,
-    "fsp": None,
-    "fspi": None,
-    "sn": None,
-    "last_down_cause": None,
-    "state": None,
-    "status": None,
-    "type": None,
-    "vendor": None,
-    "ip_address": None,
-    "plan_name": None,
-    "spid": None,
-    "vlan": None,
-    "plan": None,
-    "provider": None,
-    "plan_name": None,
-    "temp": None,
-    "pwr": None,
-    "line_profile": None,
-    "srv_profile": None,
-    "device": None,
-    "wan": [{"vlan": None, "spid": None, "plan_name": None, "provider": None}],
-}
-
-client_payload = {
-    "frame": None,
-    "slot": None,
-    "port": None,
-    "onu_id": None,
-    "olt": None,
-    "fsp": None,
-    "fspi": None,
-    "name_1": None,
-    "name_2": None,
-    "contract": None,
-    "status": None,
-    "state": None,
-    "sn": None,
-    "device": None,
-    "plan_name": None,
-    "spid": None,
-}
 
 change_types = ["CT", "CP", "CO"]
 
 bridges = ["EG8120L", "EG8010Hv6", "010H"]
+
+plan_type={"1240":"OZ_FAMILY_A",
+           "2240":"OZ_FAMILY_B",
+           "1241":"OZ_MAX_A",
+           "2241":"OZ_MAX_A",
+           "1242":"OZ_NEXT_A",
+           "2242":"OZ_NEXT_A",
+           "1243":"OZ_MAGICAL_A",
+           "2243":"OZ_MAGICAL_A"}
 
 ############################# OIDS & SNMP #############################
 
