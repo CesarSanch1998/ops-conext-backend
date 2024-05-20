@@ -7,6 +7,7 @@ from routes.client import client
 from routes.wan_config import wanconfig
 from config.db import conn
 from routes.update_db import update_db
+from routes.delete_db import delete_db
 app = FastAPI()
 
 #/////Agregando la ruta al route
@@ -14,6 +15,7 @@ app.include_router(resync)
 app.include_router(client)
 app.include_router(wanconfig)
 app.include_router(update_db)
+app.include_router(delete_db)
 
 origins = [
     "http://localhost",
