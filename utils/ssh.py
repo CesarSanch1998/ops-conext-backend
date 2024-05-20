@@ -21,8 +21,6 @@ def ssh(ip, debugging):
         try:
             username = creds["data"][count]["user_name"]
             password = creds["data"][count]["password"]
-            print(username)
-            print(password)
             port = 22
             print(f"trying to connect with {username} @ {ip}", "info")
             conn.connect(ip, port, username, password, timeout=20)
