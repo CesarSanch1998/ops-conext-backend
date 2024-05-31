@@ -52,11 +52,13 @@ bridges = ["EG8120L", "EG8010Hv6", "010H"]
 plan_type={"1240":"OZ_FAMILY_A",
            "2240":"OZ_FAMILY_B",
            "1241":"OZ_MAX_A",
-           "2241":"OZ_MAX_A",
+           "2241":"OZ_MAX_B",
            "1242":"OZ_NEXT_A",
-           "2242":"OZ_NEXT_A",
+           "2242":"OZ_NEXT_B",
            "1243":"OZ_MAGICAL_A",
-           "2243":"OZ_MAGICAL_A"}
+           "2243":"OZ_MAGICAL_B",
+           "102":"OZ_DEDICADO_IP",
+           "1104":"OZ_DEDICADO_IP"}
 
 ############################# OIDS & SNMP #############################
 

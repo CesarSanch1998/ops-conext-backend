@@ -6,8 +6,9 @@ from utils.ssh import ssh
 from config.db import session
 from models.model_db import client_db
 from utils.definitions import plan_type
-
+import json
 onu_data = {}
+
 def getdata_smartolt(onu_unique_id):
     data = db_request_smartolt('get_onu_smartolt',onu_unique_id)
     onu_details = data['onu_details']
@@ -45,7 +46,7 @@ def getdata_smartolt(onu_unique_id):
     onu_data['onu_mode'] = onu_details['mode']
     onu_data['onu_state'] = 'active' if onu_details['administrative_status'] == 'Enabled' else 'deactivated'
 
-    response = update_client_db(onu_data)
+    response = update_all_client_db(onu_data)
     # response = onu_data['client_name_2']
     return response
 
@@ -96,8 +97,39 @@ def add_client_db(data):
                        device=data['onu_type_name'],
                        plan_name = plan_type[data['vlan']],
                        spid = data['service_port'])
-
+    
+    
     #Mandar valores a guardar
     session.add(client)
     session.commit()
+     
     return 'Client Add Successfully'
+
+
+def update_all_client_db(data):
+
+    result = session.query(client_db).filter(client_db.contract == data['onu_contract']).update({
+                       'frame':data['onu_frame'],
+                       'slot':data['onu_slot'],
+                       'port':data['onu_port'],
+                       'onu_id':data['onu_id'],
+                       'olt':data['olt_name'],
+                       'fsp':data['f/s/p'],
+                       'fspi':data['f/s/p'] +'/'+ data['onu_id'],
+                       'name_1':data['client_name_1'],
+                       'name_2':data['client_name_2'],
+                       'state':data['onu_state'],
+                       'sn':data['onu_sn'],
+                       'device':data['onu_type_name'],
+                       'plan_name': plan_type[data['vlan']],
+                       'spid': data['service_port']
+    # ... (otros atributos a actualizar)
+    })
+
+    session.commit()
+
+    if result > 0:  # Verificar si se actualizó algún registro
+        return 'Client Update Successfully'
+    else:
+        # ... (manejar el caso donde no se encontró el registro)
+            return 'Client No Successfully'
