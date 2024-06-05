@@ -76,7 +76,7 @@ def update_client_db(data):
         #Mandar valores a guardar
         session.add(request)
         session.commit()
-        
+
         if request > 0:  # Verificar si se actualizó algún registro
             return 'Client update Successfully'
         else:
@@ -107,12 +107,7 @@ def add_client_db(data):
     #Mandar valores a guardar
     session.add(client)
     session.commit()
-     
-    if client > 0:  # Verificar si se actualizó algún registro
-        return 'Client add Successfully'
-    else:
-        # ... (manejar el caso donde no se encontró el registro)
-            return 'Client add Successfully'
+    
 
 
 def update_all_client_db(data):
