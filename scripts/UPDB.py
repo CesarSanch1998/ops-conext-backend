@@ -46,7 +46,7 @@ def getdata_smartolt(onu_unique_id):
     onu_data['onu_mode'] = onu_details['mode']
     onu_data['onu_state'] = 'active' if onu_details['administrative_status'] == 'Enabled' else 'deactivated'
 
-    response = update_all_client_db(onu_data)
+    response = update_client_db(onu_data)
     # response = onu_data['client_name_2']
     return response
 
