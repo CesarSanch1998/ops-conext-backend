@@ -8,7 +8,7 @@ from utils.definitions import endpoints
 
 def ssh(ip, debugging):
     count = 0
-    delay = 0.25
+    delay = 0.50
     conn = paramiko.SSHClient()
     conn.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     comm = None

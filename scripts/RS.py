@@ -31,7 +31,7 @@ def resync_getdata_smartolt(onu_unique_id):
         response = resync_undo_data_bridge(onu_data)
     elif onu_data['onu_mode'] == "Routing":
         if onu_data['onu_type_name'] == 'ONU-type-eth-4-pots-2-catv-0':
-            return 'BDCM'
+            return 'Modelo no indentificado'
         else:
             response = resync_undo_data_router(onu_data)
             return response
@@ -79,3 +79,4 @@ def resync_undo_data_router(data):
     command(f"quit")
     command(f"service-port {data['service_port']} vlan {data['vlan']} gpon {data['f/s/p']} ont {data['onu_id']} gemport 11 multi-service user-vlan {data['vlan']} tag-transform transparent inbound traffic-table index 111 outbound traffic-table index 111")
     return f"Client Resync {data['onu_name']} Successfully"
+

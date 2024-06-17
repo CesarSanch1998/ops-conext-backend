@@ -32,6 +32,9 @@ def wanconfig_getdata_smartolt(onu_unique_id):
     elif onu_data['onu_mode'] == "Routing":
         if onu_data['onu_type_name'] == 'ONU-type-eth-4-pots-2-catv-0':
             return 'BDCM'
+        elif onu_data['onu_type_name'] == 'HG81126':
+            response = wc_data_bdcm(onu_data)
+            return response
         else:
             response = wc_data_router(onu_data)
             return response
@@ -60,4 +63,17 @@ def wc_data_router(data):
     command(f"ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 1 dhcp vlan {data['vlan']} priority 0")
     command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 1 profile-id 0")
     command(f"ont internet-config {data['onu_port']} {data['onu_id']} ip-index 1")
+    return f"Client Wan Config Asigned {data['onu_name']} Successfully"
+
+def wc_data_bdcm(data):
+    (comm, command, quit_ssh) = ssh(olt_devices[data['olt_name']], True)
+    # Undo ONT bridge
+    command(f"interface gpon {data['onu_frame']}/{data['onu_slot']}")
+
+    # Reactivate ONT bridge
+    command(f"ont ipconfig {data['port']} {data['onu_id']} ip-index 1 dhcp vlan {data['vlan']} priority 0")
+    command(f"ont ipconfig {data['port']} {data['onu_id']} ip-index 2 dhcp vlan {data['vlan']} priority 5")
+    command(f"ont wan-config {data['port']} {data['onu_id']} ip-index 1 profile-id 0")
+    command(f"ont wan-config {data['port']} {data['onu_id']} ip-index 2 profile-id 0")
+    command(f"quit")
     return f"Client Wan Config Asigned {data['onu_name']} Successfully"
