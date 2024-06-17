@@ -71,9 +71,9 @@ def wc_data_bdcm(data):
     command(f"interface gpon {data['onu_frame']}/{data['onu_slot']}")
 
     # Reactivate ONT bridge
-    command(f"ont ipconfig {data['port']} {data['onu_id']} ip-index 1 dhcp vlan {data['vlan']} priority 0")
-    command(f"ont ipconfig {data['port']} {data['onu_id']} ip-index 2 dhcp vlan {data['vlan']} priority 5")
-    command(f"ont wan-config {data['port']} {data['onu_id']} ip-index 1 profile-id 0")
-    command(f"ont wan-config {data['port']} {data['onu_id']} ip-index 2 profile-id 0")
+    command(f"ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 1 dhcp vlan {data['vlan']} priority 0")
+    command(f"ont ipconfig {data['onu_port']} {data['onu_id']} ip-index 2 dhcp vlan {data['vlan']} priority 5")
+    command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 1 profile-id 0")
+    command(f"ont wan-config {data['onu_port']} {data['onu_id']} ip-index 2 profile-id 0")
     command(f"quit")
     return f"Client Wan Config Asigned {data['onu_name']} Successfully"
