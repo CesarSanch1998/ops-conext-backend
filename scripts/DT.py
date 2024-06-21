@@ -55,6 +55,8 @@ def delete_client_db(data):
     contract = session.query(client_db).filter(
         client_db.contract == data['onu_contract']
     ).delete()
+
+    session.commit()
     if contract > 0:  # Verificar si se actualizó algún registro
         return 'Client delete Successfully'
     else:
