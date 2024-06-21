@@ -53,8 +53,9 @@ def delete_client_db(data):
 
     #Mandar valores a guardar
     fspid = f"{data['f/s/p']}/{data['onu_id']}"
+    
     contract = session.query(client_db).filter(
-        client_db.fspi == fspid
+        client_db.fspi == fspid, client_db.olt == data['olt_name']
     ).delete()
 
     session.commit()
