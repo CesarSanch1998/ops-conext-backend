@@ -52,8 +52,9 @@ def getdata_smartolt(onu_unique_id):
 def delete_client_db(data):
 
     #Mandar valores a guardar
+    fspid = f"{data['f/s/p']}/{data['onu_id']}"
     contract = session.query(client_db).filter(
-        client_db.contract == data['onu_contract']
+        client_db.fspi == fspid
     ).delete()
 
     session.commit()
